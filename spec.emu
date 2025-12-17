@@ -1,0 +1,52 @@
+<!doctype html>
+<meta charset="utf8">
+<link rel="stylesheet" href="./spec.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.4/styles/github.min.css">
+<script src="./spec.js"></script>
+<pre class="metadata">
+title: Object.symbols
+stage: 1
+contributors: Ruben Bridgewater, Jordan Harband
+</pre>
+
+<emu-clause id="sec-fundamental-objects" number="20">
+  <h1>Fundamental Objects</h1>
+
+  <emu-clause id="sec-object-objects" number="1">
+    <h1>Object Objects</h1>
+
+    <emu-clause id="sec-object-constructor" number="1">
+      <h1>The Object Constructor</h1>
+
+      <emu-clause id="sec-properties-of-the-object-constructor" number="2">
+        <h1>Properties of the Object Constructor</h1>
+
+        <emu-clause id="sec-object.seal" number="22">
+          <h1>Object.seal ( _O_ )</h1>
+          <p>This function performs the following steps when called:</p>
+          <emu-alg>
+            1. If _O_ is not an Object, return _O_.
+            1. Let _status_ be ? SetIntegrityLevel(_O_, ~sealed~).
+            1. If _status_ is *false*, throw a *TypeError* exception.
+            1. Return _O_.
+          </emu-alg>
+        </emu-clause>
+
+        <emu-clause id="sec-object.symbols">
+          <h1>Object.symbols ( _O_ )</h1>
+          <p>This function performs the following steps when called:</p>
+          <emu-alg>
+            1. Let _obj_ be ? ToObject(_O_).
+            1. Let _keys_ be ? <emu-meta effects="user-code">_obj_.[[OwnPropertyKeys]]()</emu-meta>.
+            1. Let _symbols_ be a new empty List.
+            1. For each element _key_ of _keys_, do
+              1. If _key_ is a Symbol, then
+                1. Let _desc_ be ? <emu-meta effects="user-code">_obj_.[[GetOwnProperty]]</emu-meta>.
+                1. If _desc_ is not *undefined* and  _desc_.[[Enumerable]]_ is *true*, append _key_ to _symbols_.
+            1. Return CreateArrayFromList(_symbols_).
+          </emu-alg>
+        </emu-clause>
+      </emu-clause>
+    </emu-clause>
+  </emu-clause>
+</emu-clause>

@@ -37,27 +37,6 @@ function enumerableSymbols(object) {
 
 This pattern is error‑prone, incurs extra per‑property descriptor lookups, and cannot be optimized by engines. The proposed option provides an ergonomic, reliable, and performant solution.
 
-## Detailed Design
-
-### Add a new top level method to Object
-
-```
-Object.symbols ( O )
-```
-
-* **`O`** – the object whose own symbol properties are to be returned.
-
-### Abstract Algorithm Changes (Wording Sketch)
-
-1. Let *obj* be ? `ToObject(O)`.
-2. Let *keys* be **?** `OrdinaryOwnPropertyKeys(obj)`.
-3. Let *symbols* be a new empty List.
-4. For each *key* of *keys*, do
-   1. If *key* is a Symbol, then
-      1. Let *desc* be ? `OrdinaryGetOwnProperty(obj, key)`.
-      1. If *desc.\[\[Enumerable]]* is **true**, append *key* to *symbols*.
-5. Return CreateArrayFromList(*symbols*).
-
 ### Invariants
 
 * Order of returned symbols **must remain** the same relative order as in `[[OwnPropertyKeys]]`.
